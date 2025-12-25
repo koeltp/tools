@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全能工具箱 - 开发者的瑞士军刀</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- QRCode 库 -->
+    <script src="https://cdn.jsdelivr.net/npm/davidshimjs-qrcodejs@0.0.2/qrcode.min.js"></script>
+    <!-- jsQR 库 -->
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- 侧边栏导航 -->
+        <nav class="sidebar">
+            <div class="logo">
+                <i class="fas fa-toolbox"></i>
+                <h1>全能工具箱</h1>
+            </div>
+
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#timestamp" class="nav-link active" data-tool="timestamp">
+                        <i class="far fa-clock"></i>
+                        <span>时间戳转换</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#json" class="nav-link" data-tool="json">
+                        <i class="fas fa-code"></i>
+                        <span>JSON工具</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#md5" class="nav-link" data-tool="md5">
+                        <i class="fas fa-fingerprint"></i>
+                        <span>MD5加密</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#aes" class="nav-link" data-tool="aes">
+                        <i class="fas fa-lock"></i>
+                        <span>AES加密/解密</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#encode" class="nav-link" data-tool="encode">
+                        <i class="fas fa-key"></i>
+                        <span>编码/解码</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#password" class="nav-link" data-tool="password">
+                        <i class="fas fa-key"></i>
+                        <span>密码生成器</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#qrcode" class="nav-link" data-tool="qrcode">
+                        <i class="fas fa-qrcode"></i>
+                        <span>二维码工具</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <p>© 2023 全能工具箱</p>
+                <p>开发者必备工具集</p>
+            </div>
+        </nav>
+
+        <!-- 主内容区 -->
+        <main class="main-content">
+            <!-- 顶部栏 -->
+            <div class="topbar">
+                <h2 id="currentToolTitle">时间戳转换</h2>
+                <div class="topbar-controls">
+                    <button class="theme-toggle" id="themeToggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 时间戳转换工具 -->
+            <div id="timestamp-tool" class="tool-content active">
+                <div class="tool-header">
+                    <div class="tool-icon">
+                        <i class="far fa-clock"></i>
+                    </div>
+                    <div>
+                        <h2 class="tool-title">时间戳转换工具</h2>
+                        <p class="tool-description">在时间戳与日期格式之间相互转换，支持多种时间格式</p>
+                    </div>
+                </div>
+
+                <div class="current-time">
+                    <span>当前时间: <span id="currentTime"></span></span> |
+                    <span>当前时间戳: <span id="currentTimestamp"></span> (秒)</span>
+                </div>
+
+                <div class="input-group">
+                    <label for="timestampInput"><i class="fas fa-sign-in-alt"></i> 输入时间戳或日期</label>
+                    <input type="text" id="timestampInput" placeholder="输入时间戳（秒/毫秒）或日期字符串（如：2023-01-01 12:00:00）">
+                </div>
+
+                <div class="button-group">
+                    <button id="convertToDate" class="btn btn-success">
+                        <i class="fas fa-calendar-alt"></i> 转换为日期
+                    </button>
+                    <button id="convertToTimestamp" class="btn btn-success">
+                        <i class="fas fa-clock"></i> 转换为时间戳
+                    </button>
+                    <button id="useCurrentTime" class="btn btn-secondary">
+                        <i class="fas fa-sync-alt"></i> 使用当前时间
+                    </button>
+                    <button id="clearTimestamp" class="btn btn-warning">
+                        <i class="fas fa-broom"></i> 清空
+                    </button>
+                </div>
+
+                <div class="result-container">
+                    <div class="result-title"><i class="fas fa-history"></i> 转换结果</div>
+                    <div class="result-content" id="timestampResult">等待转换...</div>
+                </div>
+
+                <div class="time-formats" id="timeFormats">
+                    <!-- 时间格式示例将通过JavaScript动态生成 -->
+                </div>
+            </div>
+
+            <!-- JSON工具 -->
+            <div id="json-tool" class="tool-content">
+                <div class="tool-header">
+                    <div class="tool-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div>
+                        <h2 class="tool-title">JSON工具</h2>
+                        <p class="tool-description">格式化、验证、压缩和转义JSON数据，便于开发和调试</p>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="jsonInput"><i class="fas fa-keyboard"></i> 输入JSON数据</label>
+                    <textarea id="jsonInput"
+                        placeholder='请输入JSON数据，例如：{"name": "张三", "age": 25, "hobbies": ["阅读", "音乐"]}'></textarea>
+                </div>
+
+                <div class="button-group">
+                    <button id="formatJson" class="btn btn-success">
+                        <i class="fas fa-indent"></i> 格式化
+                    </button>
+                    <button id="validateJson" class="btn btn-success">
+                        <i class="fas fa-check-circle"></i> 验证
+                    </button>
+                    <button id="compressJson" class="btn btn-secondary">
+                        <i class="fas fa-compress-alt"></i> 压缩
+                    </button>
+                    <button id="escapeJson" class="btn btn-secondary">
+                        <i class="fas fa-shield-alt"></i> 转义
+                    </button>
+                    <button id="unescapeJson" class="btn btn-secondary">
+                        <i class="fas fa-undo-alt"></i> 反转义
+                    </button>
+                    <button id="clearJson" class="btn btn-warning">
+                        <i class="fas fa-broom"></i> 清空
+                    </button>
+                </div>
+
+                <div class="result-container">
+                    <div class="result-title"><i class="fas fa-file-code"></i> 处理结果</div>
+                    <div class="result-content" id="jsonResult">等待处理...</div>
+                </div>
+            </div>
+
+            <!-- MD5加密工具 -->
+            <div id="md5-tool" class="tool-content">
+                <div class="tool-header">
+                    <div class="tool-icon">
+                        <i class="fas fa-fingerprint"></i>
+                    </div>
+                    <div>
+                        <h2 class="tool-title">MD5加密工具</h2>
+                        <p class="tool-description">生成文本的MD5哈希值，用于数据校验和加密</p>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="md5Input"><i class="fas fa-font"></i> 输入要加密的文本</label>
+                    <textarea id="md5Input" placeholder="输入要计算MD5哈希值的文本"></textarea>
+                </div>
+
+                <div class="button-group">
+                    <button id="generateMD5" class="btn btn-success">
+                        <i class="fas fa-hashtag"></i> 生成MD5
+                    </button>
+                    <button id="clearMD5" class="btn btn-warning">
+                        <i class="fas fa-broom"></i> 清空
+                    </button>
+                </div>
+
+                <div class="result-container">
+                    <div class="result-title"><i class="fas fa-fingerprint"></i> MD5加密结果</div>
+                    <div class="result-content" id="md5Result">等待加密...</div>
+                </div>
+            </div>
+
+            <!-- AES加密解密工具 -->
+            <div id="aes-tool" class="tool-content">
+                <div class="tool-header">
+                    <div class="tool-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div>
+                        <h2 class="tool-title">AES加密/解密工具</h2>
+                        <p class="tool-description">使用AES算法加密和解密文本数据</p>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="aesInput"><i class="fas fa-keyboard"></i> 输入要加密/解密的文本</label>
+                    <textarea id="aesInput" placeholder="输入要加密或解密的文本"></textarea>
+                </div>
+
+                <div class="input-group">
+                    <label for="aesKey"><i class="fas fa-key"></i> 密钥 (16/24/32字节)</label>
+                    <input type="text" id="aesKey" placeholder="输入AES密钥，长度16/24/32字符" value="mySecretKey12345">
+                </div>
+
+                <div class="crypto-options">
+                    <div class="crypto-option active" data-mode="encrypt">
+                        <div class="crypto-option-title">
+                            <i class="fas fa-lock"></i> 加密模式
+                        </div>
+                        <div class="crypto-option-desc">将明文转换为密文</div>
+                    </div>
+                    <div class="crypto-option" data-mode="decrypt">
+                        <div class="crypto-option-title">
+                            <i class="fas fa-unlock"></i> 解密模式
+                        </div>
+                        <div class="crypto-option-desc">将密文转换为明文</div>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button id="processAES" class="btn btn-success">
+                        <i class="fas fa-cogs"></i> 执行加密/解密
+                    </button>
+                    <button id="clearAES" class="btn btn-warning">
+                        <i class="fas fa-broom"></i> 清空
+                    </button>
+                </div>
+
+                <div class="result-container">
+                    <div class="result-title"><i class="fas fa-lock"></i> 加密/解密结果</div>
+                    <div class="result-content" id="aesResult">等待处理...</div>
+                </div>
+            </div>
+
+            <!-- 编码解码工具 -->
+            <div id="encode-tool" class="tool-content">
+                <div class="tool-header">
+                    <div class="tool-icon">
+                        <i class="fas fa-key"></i>
+                    </div>
+                    <div>
+                        <h2 class="tool-title">编码/解码工具</h2>
+                        <p class="tool-description">Base64、URL、HTML等编码格式的相互转换</p>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="encodeInput"><i class="fas fa-keyboard"></i> 输入要编码/解码的文本</label>
+                    <textarea id="encodeInput" placeholder="输入要编码或解码的文本"></textarea>
+                </div>
+
+                <div class="crypto-options">
+                    <div class="crypto-option active" data-encode-type="base64-encode">
+                        <div class="crypto-option-title">
+                            <i class="fas fa-code"></i> Base64编码
+                        </div>
+                        <div class="crypto-option-desc">将文本转换为Base64格式</div>
+                    </div>
+                    <div class="crypto-option" data-encode-type="base64-decode">
+                        <div class="crypto-option-title">
+                            <i class="fas fa-code"></i> Base64解码
+                        </div>
+                        <div class="crypto-option-desc">将Base64转换为文本</div>
+                    </div>
+                    <div class="crypto-option" data-encode-type="url-encode">
+                        <div class="crypto-option-title">
+                            <i class="fas fa-link"></i> URL编码
+                        </div>
+                        <div class="crypto-option-desc">将文本进行URL编码</div>
+                    </div>
+                    <div class="crypto-option" data-encode-type="url-decode">
+                        <div class="crypto-option-title">
+                            <i class="fas fa-unlink"></i> URL解码
+                        </div>
+                        <div class="crypto-option-desc">将URL编码转换为文本</div>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button id="processEncode" class="btn btn-success">
+                        <i class="fas fa-cogs"></i> 执行编码/解码
+                    </button>
+                    <button id="clearEncode" class="btn btn-warning">
+                        <i class="fas fa-broom"></i> 清空
+                    </button>
+                </div>
+
+                <div class="result-container">
+                    <div class="result-title"><i class="fas fa-code"></i> 编码/解码结果</div>
+                    <div class="result-content" id="encodeResult">等待处理...</div>
+                </div>
+            </div>
+
+            <!-- 密码生成工具 -->
+            <div id="password-tool" class="tool-content">
+                <div class="tool-header">
+                    <div class="tool-icon">
+                        <i class="fas fa-key"></i>
+                    </div>
+                    <div>
+                        <h2 class="tool-title">密码生成器</h2>
+                        <p class="tool-description">生成安全、随机的密码，可自定义长度和字符类型</p>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="passwordLength"><i class="fas fa-ruler"></i> 密码长度</label>
+                    <input type="range" id="passwordLength" min="6" max="32" value="12">
+                    <div style="display: flex; justify-content: space-between; margin-top: 5px;">
+                        <span>6</span>
+                        <span id="passwordLengthValue">12</span>
+                        <span>32</span>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label><i class="fas fa-check-square"></i> 包含字符类型</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="includeLowercase" checked> 小写字母 (a-z)
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="includeUppercase" checked> 大写字母 (A-Z)
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="includeNumbers" checked> 数字 (0-9)
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="includeSymbols" checked> 符号 (!@#$%^&*)
+                        </label>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="generatedPassword"><i class="fas fa-key"></i> 生成的密码</label>
+                    <div class="password-display">
+                        <input type="text" id="generatedPassword" readonly>
+                        <button id="copyPassword" class="btn btn-secondary">
+                            <i class="fas fa-copy"></i> 复制
+                        </button>
+                    </div>
+                    <div class="password-strength">
+                        <div id="strengthMeter" class="strength-meter strength-weak"></div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-top: 5px;">
+                        <span style="color: #f72585;">弱</span>
+                        <span style="color: #f8961e;">一般</span>
+                        <span style="color: #4cc9f0;">好</span>
+                        <span style="color: #4ade80;">强</span>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button id="generatePassword" class="btn btn-success">
+                        <i class="fas fa-key"></i> 生成密码
+                    </button>
+                    <button id="generateMultiple" class="btn btn-secondary">
+                        <i class="fas fa-key"></i> 生成5个密码
+                    </button>
+                    <button id="clearPassword" class="btn btn-warning">
+                        <i class="fas fa-broom"></i> 清空
+                    </button>
+                </div>
+
+                <div class="result-container">
+                    <div class="result-title"><i class="fas fa-list"></i> 最近生成的密码</div>
+                    <div class="result-content" id="passwordHistory">等待生成密码...</div>
+                </div>
+            </div>
+            <div id="qrcode-tool" class="tool-content">
+                <div class="tool-header">
+                    <div class="tool-icon">
+                        <i class="fas fa-qrcode"></i>
+                    </div>
+                    <div>
+                        <h2 class="tool-title">二维码工具</h2>
+                        <p class="tool-description">生成和解码二维码，支持文本、URL、联系方式等</p>
+                    </div>
+                </div>
+
+                <div class="crypto-options">
+                    <div class="crypto-option active" data-qrcode-mode="generate">
+                        <div class="crypto-option-title">
+                            <i class="fas fa-qrcode"></i> 生成二维码
+                        </div>
+                        <div class="crypto-option-desc">将文本转换为二维码图片</div>
+                    </div>
+                    <div class="crypto-option" data-qrcode-mode="decode">
+                        <div class="crypto-option-title">
+                            <i class="fas fa-search"></i> 解码二维码
+                        </div>
+                        <div class="crypto-option-desc">从图片中提取二维码信息</div>
+                    </div>
+                </div>
+
+                <!-- 生成二维码区域 -->
+                <div id="qrcode-generate" class="qrcode-section">
+                    <div class="input-group">
+                        <label for="qrcodeInput"><i class="fas fa-font"></i> 输入要编码的文本</label>
+                        <textarea id="qrcodeInput" placeholder="输入要生成二维码的文本，如：https://example.com 或 任意文本"></textarea>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="qrcodeSize"><i class="fas fa-expand-alt"></i> 二维码尺寸</label>
+                        <input type="range" id="qrcodeSize" min="100" max="500" value="200">
+                        <div style="display: flex; justify-content: space-between; margin-top: 5px;">
+                            <span>100px</span>
+                            <span id="qrcodeSizeValue">200px</span>
+                            <span>500px</span>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button id="generateQRCode" class="btn btn-success">
+                            <i class="fas fa-qrcode"></i> 生成二维码
+                        </button>
+                        <button id="downloadQRCode" class="btn btn-secondary">
+                            <i class="fas fa-download"></i> 下载二维码
+                        </button>
+                        <button id="clearQRCode" class="btn btn-warning">
+                            <i class="fas fa-broom"></i> 清空
+                        </button>
+                    </div>
+
+                    <div class="result-container">
+                        <div class="result-title"><i class="fas fa-image"></i> 生成的二维码</div>
+                        <div class="qrcode-result" id="qrcodeResult">
+                            <div id="qrcodeCanvas" style="text-align: center; margin: 20px 0;"></div>
+                            <div class="result-content" id="qrcodeTextResult">等待生成二维码...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 解码二维码区域 -->
+                <div id="qrcode-decode" class="qrcode-section" style="display: none;">
+                    <div class="input-group">
+                        <label for="qrcodeUpload"><i class="fas fa-upload"></i> 上传二维码图片</label>
+                        <div class="file-upload">
+                            <input type="file" id="qrcodeUpload" accept="image/*">
+                            <div class="upload-area" id="uploadArea">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>点击选择二维码图片，或将图片拖拽到此处</p>
+                                <p class="upload-hint">支持 JPG, PNG, GIF 格式，最大 5MB</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label><i class="fas fa-image"></i> 图片预览</label>
+                        <div class="image-preview" id="imagePreview">
+                            <p>预览区域</p>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button id="decodeQRCode" class="btn btn-success">
+                            <i class="fas fa-search"></i> 解码二维码
+                        </button>
+                        <button id="clearUpload" class="btn btn-warning">
+                            <i class="fas fa-broom"></i> 清空
+                        </button>
+                    </div>
+
+                    <div class="result-container">
+                        <div class="result-title"><i class="fas fa-file-alt"></i> 解码结果</div>
+                        <div class="result-content" id="decodeResult">等待解码...</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 主JavaScript文件 -->
+    <script src="main.js" type="module"></script>
+    <script src="tools/utils.js" type="module"></script>
+    <!-- 工具JavaScript文件 -->
+    <script src="tools/timestamp.js" type="module"></script>
+    <script src="tools/json.js" type="module"></script>
+    <script src="tools/md5.js" type="module"></script>
+    <script src="tools/aes.js" type="module"></script>
+    <script src="tools/encode.js" type="module"></script>
+    <script src="tools/password.js" type="module"></script>
+    <!-- 二维码工具 - 不使用模块，因为需要访问全局 QRCode -->
+    <script src="tools/qrcode.js"></script>
+</body>
+
+</html>
