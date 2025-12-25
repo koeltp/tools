@@ -111,7 +111,7 @@ export function generateRandomString(length, options = {
 
 // 密码强度评估
 export function evaluatePasswordStrength(password) {
-    if (!password || password.length === 0) return { score: 0, level: '无' };
+    if (!password || password.length === 0) return { score: 0, level: '无', className: '' };
     
     let score = 0;
     

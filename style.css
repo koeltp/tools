@@ -65,6 +65,14 @@ body.dark-mode {
     margin-right: 15px;
 }
 
+img.logo-image {
+    width: 36px;
+    height: 36px;
+    margin-right: 15px;
+    margin: 0px;
+    padding: 0px;
+}
+
 .logo h1 {
     font-size: 1.5rem;
     font-weight: 700;
@@ -105,15 +113,6 @@ body.dark-mode {
     background-color: white;
     color: var(--primary-color);
     font-weight: 600;
-}
-
-.sidebar-footer {
-    margin-top: 40px;
-    padding-top: 20px;
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-    font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.7);
-    text-align: center;
 }
 
 /* 主内容区 */
@@ -587,8 +586,7 @@ body.dark-mode .crypto-option-desc {
     }
 
     .logo h1,
-    .nav-link span,
-    .sidebar-footer {
+    .nav-link span {
         display: none;
     }
 
@@ -843,5 +841,85 @@ body.dark-mode .result-content.copyable:active {
 
     to {
         opacity: 0;
+    }
+}
+
+/* 主内容区页脚 */
+.main-footer {
+    margin-top: 40px;
+    padding: 25px 0;
+    text-align: center;
+    color: #666;
+}
+
+body.dark-mode .main-footer {
+    color: #aaa;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.footer-copyright p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin: 5px 0;
+}
+
+/* 运行时间显示 - 无边框阴影效果 */
+.runtime-display {
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding: 10px 0;
+}
+
+.runtime-display p {
+    margin: 0;
+}
+
+/* 运行时间数字样式 - 不同颜色 */
+.runtime-days {
+    color: #f72585; /* 粉色 */
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.runtime-hours {
+    color: #4361ee; /* 蓝色 */
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.runtime-minutes {
+    color: #4cc9f0; /* 青色 */
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.runtime-seconds {
+    color: #4ade80; /* 绿色 */
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .runtime-display {
+        font-size: 1rem;
+    }
+    
+    .runtime-days,
+    .runtime-hours,
+    .runtime-minutes,
+    .runtime-seconds {
+        font-size: 1.1rem;
     }
 }

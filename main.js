@@ -74,6 +74,30 @@ document.addEventListener('DOMContentLoaded', function() {
         savedToolLink.click();
     }
     
+    // 运行时间计算功能
+    function updateRuntime() {
+        // 设置网站开始运行的时间为2025年12月25日 16:45
+        const startTime = new Date('2025-12-25T16:45:00').getTime();
+        const currentTime = new Date().getTime();
+        const elapsedTime = currentTime - startTime;
+        
+        // 计算天、时、分、秒
+        const days = Math.floor(elapsedTime / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((elapsedTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((elapsedTime % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((elapsedTime % (1000 * 60)) / 1000);
+        
+        // 更新显示
+        document.querySelector('.runtime-days').textContent = days;
+        document.querySelector('.runtime-hours').textContent = hours;
+        document.querySelector('.runtime-minutes').textContent = minutes;
+        document.querySelector('.runtime-seconds').textContent = seconds;
+    }
+    
+    // 初始化运行时间显示并每秒更新
+    updateRuntime();
+    setInterval(updateRuntime, 1000);
+    
     // 初始化应用
     console.log('全能工具箱已加载');
 });
