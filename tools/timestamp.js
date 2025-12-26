@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function () {
         timestampResult.textContent = `输入: ${input}\n\n转换为日期: ${date.toLocaleString('zh-CN')}\n\n其他格式:`;
 
         // 为结果添加点击复制功能
-        setupCopyOnClick(timestampResult, date.toLocaleString('zh-CN'));
+        //setupCopyOnClick(timestampResult, date.toLocaleString('zh-CN'));
 
         // 显示其他格式
         timeFormatsContainer.innerHTML = '';
@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function () {
         timestampResult.textContent = `输入: ${input}\n\nUnix 时间戳 (秒): ${timestampSec}\nUnix 时间戳 (毫秒): ${timestampMs}\n\n对应日期: ${date.toLocaleString('zh-CN')}`;
       
         // 为结果添加点击复制功能
-        setupCopyOnClick(timestampResult, timestampSec.toString());
+        //setupCopyOnClick(timestampResult, timestampSec.toString());
 
         // 清空格式显示
         timeFormatsContainer.innerHTML = '';
