@@ -146,13 +146,8 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('convertToDate').click();
     }
 
-    // 当工具激活时初始化示例数据
-    document.addEventListener('init-timestamp-tool', initExampleData);
-
     // 如果时间戳工具是默认激活的，直接初始化
-    if (document.getElementById('timestamp-tool').classList.contains('active')) {
         initExampleData();
-    }
 
     console.log('时间戳工具已加载');
 });

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +11,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
     <div class="app-container">
         <!-- 侧边栏导航 -->
@@ -19,49 +21,8 @@
                 <h1>太皮工具箱</h1>
             </div>
 
-            <ul class="nav-menu">
-                <li class="nav-item">
-                    <a href="index.html" class="nav-link active" data-tool="timestamp">
-                        <i class="far fa-clock"></i>
-                        <span>时间戳转换</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="json.html" class="nav-link">
-                        <i class="fas fa-code"></i>
-                        <span>JSON工具</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="md5.html" class="nav-link">
-                        <i class="fas fa-fingerprint"></i>
-                        <span>MD5加密</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="aes.html" class="nav-link">
-                        <i class="fas fa-lock"></i>
-                        <span>AES加密/解密</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="encode.html" class="nav-link">
-                        <i class="fas fa-key"></i>
-                        <span>编码/解码</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="password.html" class="nav-link">
-                        <i class="fas fa-key"></i>
-                        <span>密码生成器</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="qrcode.html" class="nav-link">
-                        <i class="fas fa-qrcode"></i>
-                        <span>二维码工具</span>
-                    </a>
-                </li>
+            <ul class="nav-menu" id="navMenu">
+                <!-- 导航菜单将通过JavaScript从nav.json动态生成 -->
             </ul>
         </nav>
 
@@ -148,4 +109,5 @@
     <script src="main.js" type="module"></script>
     <script src="tools/timestamp.js" type="module"></script>
 </body>
+
 </html>
