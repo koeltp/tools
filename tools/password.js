@@ -257,13 +257,8 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('generatePassword').click();
     }
     
-    // 当工具激活时初始化示例数据
-    document.addEventListener('init-password-tool', initExampleData);
-    
-    // 如果密码工具是默认激活的，直接初始化
-    if (document.getElementById('password-tool').classList.contains('active')) {
-        initExampleData();
-    }
+    // 直接初始化示例数据（移除事件监听）
+    initExampleData();
     
     console.log('密码生成器工具已加载');
 });

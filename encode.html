@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>时间戳转换 - 太皮工具箱</title>
+    <title>编码/解码 - 太皮工具箱</title>
     <link rel="icon" href="/favicon.png" type="image/png">
-    <meta name="keywords" content="时间戳转换, 时间戳转日期, 日期转时间戳, 时间工具">
-    <meta name="description" content="时间戳转换工具，支持时间戳与日期格式相互转换，提供多种时间格式展示。">
+    <meta name="keywords" content="Base64编码, URL编码, HTML编码, 编码转换">
+    <meta name="description" content="编码/解码工具，支持Base64、URL、HTML等多种编码格式的相互转换。">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -21,7 +21,7 @@
 
             <ul class="nav-menu">
                 <li class="nav-item">
-                    <a href="index.html" class="nav-link active" data-tool="timestamp">
+                    <a href="index.html" class="nav-link">
                         <i class="far fa-clock"></i>
                         <span>时间戳转换</span>
                     </a>
@@ -45,7 +45,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="encode.html" class="nav-link">
+                    <a href="encode.html" class="nav-link active">
                         <i class="fas fa-key"></i>
                         <span>编码/解码</span>
                     </a>
@@ -69,7 +69,7 @@
         <main class="main-content">
             <!-- 顶部栏 -->
             <div class="topbar">
-                <h2>时间戳转换</h2>
+                <h2>编码/解码</h2>
                 <div class="topbar-controls">
                     <button class="theme-toggle" id="themeToggle">
                         <i class="fas fa-moon"></i>
@@ -77,50 +77,62 @@
                 </div>
             </div>
 
-            <!-- 时间戳转换工具 -->
+            <!-- 编码解码工具 -->
             <div class="tool-content active">
                 <div class="tool-header">
                     <div class="tool-icon">
-                        <i class="far fa-clock"></i>
+                        <i class="fas fa-key"></i>
                     </div>
                     <div>
-                        <h2 class="tool-title">时间戳转换工具</h2>
-                        <p class="tool-description">在时间戳与日期格式之间相互转换，支持多种时间格式</p>
+                        <h2 class="tool-title">编码/解码工具</h2>
+                        <p class="tool-description">Base64、URL、HTML等编码格式的相互转换</p>
                     </div>
-                </div>
-
-                <div class="current-time">
-                    <span>当前时间: <span id="currentTime"></span></span> |
-                    <span>当前时间戳: <span id="currentTimestamp"></span> (秒)</span>
                 </div>
 
                 <div class="input-group">
-                    <label for="timestampInput"><i class="fas fa-sign-in-alt"></i> 输入时间戳或日期</label>
-                    <input type="text" id="timestampInput" placeholder="输入时间戳（秒/毫秒）或日期字符串（如：2023-01-01 12:00:00）">
+                    <label for="encodeInput"><i class="fas fa-keyboard"></i> 输入要编码/解码的文本</label>
+                    <textarea id="encodeInput" placeholder="输入要编码或解码的文本"></textarea>
+                </div>
+
+                <div class="crypto-options">
+                    <div class="crypto-option active" data-encode-type="base64-encode">
+                        <div class="crypto-option-title">
+                            <i class="fas fa-code"></i> Base64编码
+                        </div>
+                        <div class="crypto-option-desc">将文本转换为Base64格式</div>
+                    </div>
+                    <div class="crypto-option" data-encode-type="base64-decode">
+                        <div class="crypto-option-title">
+                            <i class="fas fa-code"></i> Base64解码
+                        </div>
+                        <div class="crypto-option-desc">将Base64转换为文本</div>
+                    </div>
+                    <div class="crypto-option" data-encode-type="url-encode">
+                        <div class="crypto-option-title">
+                            <i class="fas fa-link"></i> URL编码
+                        </div>
+                        <div class="crypto-option-desc">将文本进行URL编码</div>
+                    </div>
+                    <div class="crypto-option" data-encode-type="url-decode">
+                        <div class="crypto-option-title">
+                            <i class="fas fa-unlink"></i> URL解码
+                        </div>
+                        <div class="crypto-option-desc">将URL编码转换为文本</div>
+                    </div>
                 </div>
 
                 <div class="button-group">
-                    <button id="convertToDate" class="btn btn-success">
-                        <i class="fas fa-calendar-alt"></i> 转换为日期
+                    <button id="processEncode" class="btn btn-success">
+                        <i class="fas fa-cogs"></i> 执行编码/解码
                     </button>
-                    <button id="convertToTimestamp" class="btn btn-success">
-                        <i class="fas fa-clock"></i> 转换为时间戳
-                    </button>
-                    <button id="useCurrentTime" class="btn btn-secondary">
-                        <i class="fas fa-sync-alt"></i> 使用当前时间
-                    </button>
-                    <button id="clearTimestamp" class="btn btn-warning">
+                    <button id="clearEncode" class="btn btn-warning">
                         <i class="fas fa-broom"></i> 清空
                     </button>
                 </div>
 
                 <div class="result-container">
-                    <div class="result-title"><i class="fas fa-history"></i> 转换结果</div>
-                    <div class="result-content copyable" id="timestampResult">等待转换...</div>
-                </div>
-
-                <div class="time-formats" id="timeFormats">
-                    <!-- 时间格式示例将通过JavaScript动态生成 -->
+                    <div class="result-title"><i class="fas fa-code"></i> 编码/解码结果</div>
+                    <div class="result-content copyable" id="encodeResult">等待处理...</div>
                 </div>
             </div>
 
@@ -146,6 +158,6 @@
 
     <!-- JavaScript文件 -->
     <script src="main.js" type="module"></script>
-    <script src="tools/timestamp.js" type="module"></script>
+    <script src="tools/encode.js" type="module"></script>
 </body>
 </html>

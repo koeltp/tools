@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>时间戳转换 - 太皮工具箱</title>
+    <title>MD5加密 - 太皮工具箱</title>
     <link rel="icon" href="/favicon.png" type="image/png">
-    <meta name="keywords" content="时间戳转换, 时间戳转日期, 日期转时间戳, 时间工具">
-    <meta name="description" content="时间戳转换工具，支持时间戳与日期格式相互转换，提供多种时间格式展示。">
+    <meta name="keywords" content="MD5加密, MD5哈希, 数据加密, 密码加密">
+    <meta name="description" content="MD5加密工具，生成文本的MD5哈希值，用于数据校验和加密。">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
     <div class="app-container">
         <!-- 侧边栏导航 -->
@@ -21,7 +23,7 @@
 
             <ul class="nav-menu">
                 <li class="nav-item">
-                    <a href="index.html" class="nav-link active" data-tool="timestamp">
+                    <a href="index.html" class="nav-link">
                         <i class="far fa-clock"></i>
                         <span>时间戳转换</span>
                     </a>
@@ -33,7 +35,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="md5.html" class="nav-link">
+                    <a href="md5.html" class="nav-link active">
                         <i class="fas fa-fingerprint"></i>
                         <span>MD5加密</span>
                     </a>
@@ -69,7 +71,7 @@
         <main class="main-content">
             <!-- 顶部栏 -->
             <div class="topbar">
-                <h2>时间戳转换</h2>
+                <h2>MD5加密</h2>
                 <div class="topbar-controls">
                     <button class="theme-toggle" id="themeToggle">
                         <i class="fas fa-moon"></i>
@@ -77,50 +79,35 @@
                 </div>
             </div>
 
-            <!-- 时间戳转换工具 -->
+            <!-- MD5加密工具 -->
             <div class="tool-content active">
                 <div class="tool-header">
                     <div class="tool-icon">
-                        <i class="far fa-clock"></i>
+                        <i class="fas fa-fingerprint"></i>
                     </div>
                     <div>
-                        <h2 class="tool-title">时间戳转换工具</h2>
-                        <p class="tool-description">在时间戳与日期格式之间相互转换，支持多种时间格式</p>
+                        <h2 class="tool-title">MD5加密工具</h2>
+                        <p class="tool-description">生成文本的MD5哈希值，用于数据校验和加密</p>
                     </div>
-                </div>
-
-                <div class="current-time">
-                    <span>当前时间: <span id="currentTime"></span></span> |
-                    <span>当前时间戳: <span id="currentTimestamp"></span> (秒)</span>
                 </div>
 
                 <div class="input-group">
-                    <label for="timestampInput"><i class="fas fa-sign-in-alt"></i> 输入时间戳或日期</label>
-                    <input type="text" id="timestampInput" placeholder="输入时间戳（秒/毫秒）或日期字符串（如：2023-01-01 12:00:00）">
+                    <label for="md5Input"><i class="fas fa-font"></i> 输入要加密的文本</label>
+                    <textarea id="md5Input" placeholder="输入要计算MD5哈希值的文本"></textarea>
                 </div>
 
                 <div class="button-group">
-                    <button id="convertToDate" class="btn btn-success">
-                        <i class="fas fa-calendar-alt"></i> 转换为日期
+                    <button id="generateMD5" class="btn btn-success">
+                        <i class="fas fa-hashtag"></i> 生成MD5
                     </button>
-                    <button id="convertToTimestamp" class="btn btn-success">
-                        <i class="fas fa-clock"></i> 转换为时间戳
-                    </button>
-                    <button id="useCurrentTime" class="btn btn-secondary">
-                        <i class="fas fa-sync-alt"></i> 使用当前时间
-                    </button>
-                    <button id="clearTimestamp" class="btn btn-warning">
+                    <button id="clearMD5" class="btn btn-warning">
                         <i class="fas fa-broom"></i> 清空
                     </button>
                 </div>
 
                 <div class="result-container">
-                    <div class="result-title"><i class="fas fa-history"></i> 转换结果</div>
-                    <div class="result-content copyable" id="timestampResult">等待转换...</div>
-                </div>
-
-                <div class="time-formats" id="timeFormats">
-                    <!-- 时间格式示例将通过JavaScript动态生成 -->
+                    <div class="result-title"><i class="fas fa-fingerprint"></i> MD5加密结果</div>
+                    <div class="result-content copyable" id="md5Result">等待加密...</div>
                 </div>
             </div>
 
@@ -146,6 +133,7 @@
 
     <!-- JavaScript文件 -->
     <script src="main.js" type="module"></script>
-    <script src="tools/timestamp.js" type="module"></script>
+    <script src="tools/md5.js" type="module"></script>
 </body>
+
 </html>

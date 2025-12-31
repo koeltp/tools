@@ -99,13 +99,8 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('processAES').click();
     }
     
-    // 当工具激活时初始化示例数据
-    document.addEventListener('init-aes-tool', initExampleData);
-    
     // 如果AES工具是默认激活的，直接初始化
-    if (document.getElementById('aes-tool').classList.contains('active')) {
         initExampleData();
-    }
     
     console.log('AES工具已加载');
 });

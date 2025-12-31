@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>时间戳转换 - 太皮工具箱</title>
+    <title>AES加密/解密 - 太皮工具箱</title>
     <link rel="icon" href="/favicon.png" type="image/png">
-    <meta name="keywords" content="时间戳转换, 时间戳转日期, 日期转时间戳, 时间工具">
-    <meta name="description" content="时间戳转换工具，支持时间戳与日期格式相互转换，提供多种时间格式展示。">
+    <meta name="keywords" content="AES加密, AES解密, 数据加密, 对称加密">
+    <meta name="description" content="AES加密/解密工具，使用AES算法加密和解密文本数据，支持16/24/32字节密钥。">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -21,7 +21,7 @@
 
             <ul class="nav-menu">
                 <li class="nav-item">
-                    <a href="index.html" class="nav-link active" data-tool="timestamp">
+                    <a href="index.html" class="nav-link">
                         <i class="far fa-clock"></i>
                         <span>时间戳转换</span>
                     </a>
@@ -39,7 +39,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="aes.html" class="nav-link">
+                    <a href="aes.html" class="nav-link active">
                         <i class="fas fa-lock"></i>
                         <span>AES加密/解密</span>
                     </a>
@@ -69,7 +69,7 @@
         <main class="main-content">
             <!-- 顶部栏 -->
             <div class="topbar">
-                <h2>时间戳转换</h2>
+                <h2>AES加密/解密</h2>
                 <div class="topbar-controls">
                     <button class="theme-toggle" id="themeToggle">
                         <i class="fas fa-moon"></i>
@@ -77,50 +77,55 @@
                 </div>
             </div>
 
-            <!-- 时间戳转换工具 -->
+            <!-- AES加密解密工具 -->
             <div class="tool-content active">
                 <div class="tool-header">
                     <div class="tool-icon">
-                        <i class="far fa-clock"></i>
+                        <i class="fas fa-lock"></i>
                     </div>
                     <div>
-                        <h2 class="tool-title">时间戳转换工具</h2>
-                        <p class="tool-description">在时间戳与日期格式之间相互转换，支持多种时间格式</p>
+                        <h2 class="tool-title">AES加密/解密工具</h2>
+                        <p class="tool-description">使用AES算法加密和解密文本数据</p>
                     </div>
-                </div>
-
-                <div class="current-time">
-                    <span>当前时间: <span id="currentTime"></span></span> |
-                    <span>当前时间戳: <span id="currentTimestamp"></span> (秒)</span>
                 </div>
 
                 <div class="input-group">
-                    <label for="timestampInput"><i class="fas fa-sign-in-alt"></i> 输入时间戳或日期</label>
-                    <input type="text" id="timestampInput" placeholder="输入时间戳（秒/毫秒）或日期字符串（如：2023-01-01 12:00:00）">
+                    <label for="aesInput"><i class="fas fa-keyboard"></i> 输入要加密/解密的文本</label>
+                    <textarea id="aesInput" placeholder="输入要加密或解密的文本"></textarea>
+                </div>
+
+                <div class="input-group">
+                    <label for="aesKey"><i class="fas fa-key"></i> 密钥 (16/24/32字节)</label>
+                    <input type="text" id="aesKey" placeholder="输入AES密钥，长度16/24/32字符" value="mySecretKey12345">
+                </div>
+
+                <div class="crypto-options">
+                    <div class="crypto-option active" data-mode="encrypt">
+                        <div class="crypto-option-title">
+                            <i class="fas fa-lock"></i> 加密模式
+                        </div>
+                        <div class="crypto-option-desc">将明文转换为密文</div>
+                    </div>
+                    <div class="crypto-option" data-mode="decrypt">
+                        <div class="crypto-option-title">
+                            <i class="fas fa-unlock"></i> 解密模式
+                        </div>
+                        <div class="crypto-option-desc">将密文转换为明文</div>
+                    </div>
                 </div>
 
                 <div class="button-group">
-                    <button id="convertToDate" class="btn btn-success">
-                        <i class="fas fa-calendar-alt"></i> 转换为日期
+                    <button id="processAES" class="btn btn-success">
+                        <i class="fas fa-cogs"></i> 执行加密/解密
                     </button>
-                    <button id="convertToTimestamp" class="btn btn-success">
-                        <i class="fas fa-clock"></i> 转换为时间戳
-                    </button>
-                    <button id="useCurrentTime" class="btn btn-secondary">
-                        <i class="fas fa-sync-alt"></i> 使用当前时间
-                    </button>
-                    <button id="clearTimestamp" class="btn btn-warning">
+                    <button id="clearAES" class="btn btn-warning">
                         <i class="fas fa-broom"></i> 清空
                     </button>
                 </div>
 
                 <div class="result-container">
-                    <div class="result-title"><i class="fas fa-history"></i> 转换结果</div>
-                    <div class="result-content copyable" id="timestampResult">等待转换...</div>
-                </div>
-
-                <div class="time-formats" id="timeFormats">
-                    <!-- 时间格式示例将通过JavaScript动态生成 -->
+                    <div class="result-title"><i class="fas fa-lock"></i> 加密/解密结果</div>
+                    <div class="result-content copyable" id="aesResult">等待处理...</div>
                 </div>
             </div>
 
@@ -146,6 +151,6 @@
 
     <!-- JavaScript文件 -->
     <script src="main.js" type="module"></script>
-    <script src="tools/timestamp.js" type="module"></script>
+    <script src="tools/aes.js" type="module"></script>
 </body>
 </html>

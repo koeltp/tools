@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>二维码工具 - 太皮工具箱</title>
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <meta name="keywords" content="二维码生成, 二维码解码, QR码, 二维码工具">
+    <meta name="description" content="二维码工具，生成和解码二维码，支持文本、URL、联系方式等。">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- QRCode 库 -->
+    <script src="https://cdn.jsdelivr.net/npm/davidshimjs-qrcodejs@0.0.2/qrcode.min.js"></script>
+    <!-- jsQR 库 -->
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- 侧边栏导航 -->
+        <nav class="sidebar">
+            <div class="logo">
+                <img src="./images/tools_logo.png" alt="太皮工具箱 Logo" class="logo-image">
+                <h1>太皮工具箱</h1>
+            </div>
+
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">
+                        <i class="far fa-clock"></i>
+                        <span>时间戳转换</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="json.html" class="nav-link">
+                        <i class="fas fa-code"></i>
+                        <span>JSON工具</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="md5.html" class="nav-link">
+                        <i class="fas fa-fingerprint"></i>
+                        <span>MD5加密</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="aes.html" class="nav-link">
+                        <i class="fas fa-lock"></i>
+                        <span>AES加密/解密</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="encode.html" class="nav-link">
+                        <i class="fas fa-key"></i>
+                        <span>编码/解码</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="password.html" class="nav-link">
+                        <i class="fas fa-key"></i>
+                        <span>密码生成器</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="qrcode.html" class="nav-link active">
+                        <i class="fas fa-qrcode"></i>
+                        <span>二维码工具</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- 主内容区 -->
+        <main class="main-content">
+            <!-- 顶部栏 -->
+            <div class="topbar">
+                <h2>二维码工具</h2>
+                <div class="topbar-controls">
+                    <button class="theme-toggle" id="themeToggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 二维码工具 -->
+            <div class="tool-content active">
+                <div class="tool-header">
+                    <div class="tool-icon">
+                        <i class="fas fa-qrcode"></i>
+                    </div>
+                    <div>
+                        <h2 class="tool-title">二维码工具</h2>
+                        <p class="tool-description">生成和解码二维码，支持文本、URL、联系方式等</p>
+                    </div>
+                </div>
+
+                <div class="crypto-options">
+                    <div class="crypto-option active" data-qrcode-mode="generate">
+                        <div class="crypto-option-title">
+                            <i class="fas fa-qrcode"></i> 生成二维码
+                        </div>
+                        <div class="crypto-option-desc">将文本转换为二维码图片</div>
+                    </div>
+                    <div class="crypto-option" data-qrcode-mode="decode">
+                        <div class="crypto-option-title">
+                            <i class="fas fa-search"></i> 解码二维码
+                        </div>
+                        <div class="crypto-option-desc">从图片中提取二维码信息</div>
+                    </div>
+                </div>
+
+                <!-- 生成二维码区域 -->
+                <div id="qrcode-generate" class="qrcode-section">
+                    <div class="input-group">
+                        <label for="qrcodeInput"><i class="fas fa-font"></i> 输入要编码的文本</label>
+                        <textarea id="qrcodeInput" placeholder="输入要生成二维码的文本，如：https://example.com 或 任意文本"></textarea>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="qrcodeSize"><i class="fas fa-expand-alt"></i> 二维码尺寸</label>
+                        <input type="range" id="qrcodeSize" min="100" max="500" value="200">
+                        <div style="display: flex; justify-content: space-between; margin-top: 5px;">
+                            <span>100px</span>
+                            <span id="qrcodeSizeValue">200px</span>
+                            <span>500px</span>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button id="generateQRCode" class="btn btn-success">
+                            <i class="fas fa-qrcode"></i> 生成二维码
+                        </button>
+                        <button id="downloadQRCode" class="btn btn-secondary">
+                            <i class="fas fa-download"></i> 下载二维码
+                        </button>
+                        <button id="clearQRCode" class="btn btn-warning">
+                            <i class="fas fa-broom"></i> 清空
+                        </button>
+                    </div>
+
+                    <div class="result-container">
+                        <div class="result-title"><i class="fas fa-image"></i> 生成的二维码</div>
+                        <div class="qrcode-result" id="qrcodeResult">
+                            <div id="qrcodeCanvas" style="text-align: center; margin: 20px 0;"></div>
+                            <div class="result-content copyable" id="qrcodeTextResult">等待生成二维码...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 解码二维码区域 -->
+                <div id="qrcode-decode" class="qrcode-section" style="display: none;">
+                    <div class="input-group">
+                        <label for="qrcodeUpload"><i class="fas fa-upload"></i> 上传二维码图片</label>
+                        <div class="file-upload">
+                            <input type="file" id="qrcodeUpload" accept="image/*">
+                            <div class="upload-area" id="uploadArea">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>点击选择二维码图片，或将图片拖拽到此处</p>
+                                <p class="upload-hint">支持 JPG, PNG, GIF 格式，最大 5MB</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label><i class="fas fa-image"></i> 图片预览</label>
+                        <div class="image-preview" id="imagePreview">
+                            <p>预览区域</p>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button id="decodeQRCode" class="btn btn-success">
+                            <i class="fas fa-search"></i> 解码二维码
+                        </button>
+                        <button id="clearUpload" class="btn btn-warning">
+                            <i class="fas fa-broom"></i> 清空
+                        </button>
+                    </div>
+
+                    <div class="result-container">
+                        <div class="result-title"><i class="fas fa-file-alt"></i> 解码结果</div>
+                        <div class="result-content copyable" id="decodeResult">等待解码...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 主内容区页脚 -->
+            <footer class="main-footer">
+                <div class="footer-content">
+                    <div class="footer-copyright">
+                        <p>© 2025 太皮工具箱 | 开发者必备工具集</p>
+                        <p>本工具完全在浏览器端运行，不会上传任何数据到服务器</p>
+                    </div>
+                    <div class="runtime-display">
+                        <p>小破站已运行
+                            <span class="runtime-days">0</span> 天
+                            <span class="runtime-hours">0</span> 时
+                            <span class="runtime-minutes">0</span> 分
+                            <span class="runtime-seconds">0</span> 秒
+                        </p>
+                    </div>
+                </div>
+            </footer>
+        </main>
+    </div>
+
+    <!-- JavaScript文件 -->
+    <script src="main.js"></script>
+    <script src="tools/qrcode.js"></script>
+</body>
+</html>
