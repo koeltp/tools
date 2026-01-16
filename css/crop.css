@@ -1,0 +1,489 @@
+/* 图片裁剪工具样式 */
+
+.crop-main-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.crop-preview-section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.crop-options-section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background: var(--bg-secondary);
+    padding: 20px;
+    border-radius: 8px;
+    max-height: 800px;
+    overflow-y: auto;
+}
+
+.file-upload {
+    position: relative;
+    margin-top: 10px;
+}
+
+.file-upload input {
+    display: none;
+}
+
+.upload-area {
+    border: 2px dashed var(--color-primary);
+    border-radius: 8px;
+    padding: 30px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+.upload-area:hover {
+    background: var(--color-primary);
+    opacity: 0.1;
+    border-color: var(--color-primary);
+}
+
+.upload-area.drag-over {
+    background: var(--color-primary);
+    opacity: 0.2;
+    border-color: var(--color-success);
+}
+
+.upload-area i {
+    font-size: 48px;
+    margin-bottom: 10px;
+    display: block;
+    color: var(--color-primary);
+}
+
+.upload-area p {
+    margin: 0;
+    color: var(--text-secondary);
+}
+
+/* 裁剪容器 */
+.crop-container {
+    position: relative;
+    background: var(--bg-secondary);
+    border-radius: 8px;
+    padding: 10px;
+    overflow: hidden;
+}
+
+.crop-image-wrapper {
+    position: relative;
+    width: 100%;
+    max-height: 600px;
+    overflow: hidden;
+    border-radius: 4px;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.crop-image-wrapper img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+}
+
+.crop-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    pointer-events: none;
+    border-radius: 4px;
+}
+
+.crop-box {
+    position: absolute;
+    border: 2px solid var(--color-primary);
+    background: rgba(255, 255, 255, 0.1);
+    cursor: move;
+    user-select: none;
+}
+
+.crop-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        linear-gradient(90deg, transparent 33%, rgba(255, 255, 255, 0.2) 33%, rgba(255, 255, 255, 0.2) 66%, transparent 66%),
+        linear-gradient(180deg, transparent 33%, rgba(255, 255, 255, 0.2) 33%, rgba(255, 255, 255, 0.2) 66%, transparent 66%);
+    background-size: 100% 100%;
+    pointer-events: none;
+}
+
+.crop-handle {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: var(--color-primary);
+    border: 2px solid #fff;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.crop-handle-nw {
+    top: -5px;
+    left: -5px;
+    cursor: nw-resize;
+}
+
+.crop-handle-ne {
+    top: -5px;
+    right: -5px;
+    cursor: ne-resize;
+}
+
+.crop-handle-sw {
+    bottom: -5px;
+    left: -5px;
+    cursor: sw-resize;
+}
+
+.crop-handle-se {
+    bottom: -5px;
+    right: -5px;
+    cursor: se-resize;
+}
+
+.crop-handle-n {
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: n-resize;
+}
+
+.crop-handle-s {
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: s-resize;
+}
+
+.crop-handle-w {
+    left: -5px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: w-resize;
+}
+
+.crop-handle-e {
+    right: -5px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: e-resize;
+}
+
+/* 选项组 */
+.option-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.option-group label {
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 14px;
+}
+
+.option-group input[type="range"] {
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: var(--bg-primary);
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.option-group input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.option-group input[type="range"]::-webkit-slider-thumb:hover {
+    background: var(--color-secondary);
+}
+
+.option-group input[type="range"]::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    cursor: pointer;
+    border: none;
+    transition: background 0.3s ease;
+}
+
+.option-group input[type="range"]::-moz-range-thumb:hover {
+    background: var(--color-secondary);
+}
+
+.option-group select {
+    padding: 10px;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* 按钮组 */
+.aspect-ratio-buttons,
+.rotate-buttons,
+.flip-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.aspect-btn,
+.btn-sm {
+    flex: 1;
+    min-width: 60px;
+    padding: 8px 12px;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.3s ease;
+}
+
+.aspect-btn:hover,
+.btn-sm:hover {
+    background: var(--color-primary);
+    color: white;
+    border-color: var(--color-primary);
+}
+
+.aspect-btn.active {
+    background: var(--color-primary);
+    color: white;
+    border-color: var(--color-primary);
+}
+
+/* 裁剪信息 */
+.crop-info {
+    background: var(--bg-primary);
+    padding: 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.crop-info p {
+    margin: 4px 0;
+}
+
+/* 操作按钮 */
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: auto;
+}
+
+.action-buttons .btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-primary {
+    background: var(--color-primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    opacity: 0.9;
+}
+
+.btn-primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-success {
+    background: var(--color-success);
+    color: white;
+}
+
+.btn-success:hover {
+    opacity: 0.9;
+}
+
+.btn-success:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-danger {
+    background: var(--color-danger);
+    color: white;
+}
+
+.btn-danger:hover {
+    opacity: 0.9;
+}
+
+.btn-danger:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* 结果区域 */
+.crop-result-section {
+    margin-top: 30px;
+    padding: 20px;
+    background: var(--bg-secondary);
+    border-radius: 8px;
+}
+
+.result-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.result-header h3 {
+    margin: 0;
+    font-size: 16px;
+    color: var(--text-primary);
+}
+
+.result-header p {
+    margin: 0;
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.result-preview {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    overflow: auto;
+    max-height: 600px;
+    background: var(--bg-primary);
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.result-preview canvas {
+    max-width: 100%;
+    height: auto;
+}
+
+.result-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.result-actions .btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+/* 响应式设计 */
+@media (max-width: 1200px) {
+    .crop-main-container {
+        grid-template-columns: 1fr;
+    }
+
+    .crop-options-section {
+        max-height: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .aspect-ratio-buttons,
+    .rotate-buttons,
+    .flip-buttons {
+        flex-direction: column;
+    }
+
+    .aspect-btn,
+    .btn-sm {
+        min-width: auto;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .result-actions {
+        flex-direction: column;
+    }
+}
+
+/* 深色模式适配 */
+body.dark-mode .crop-container {
+    background: #2a2a2a;
+}
+
+body.dark-mode .upload-area {
+    background: #1a1a1a;
+}
+
+body.dark-mode .crop-options-section {
+    background: #2a2a2a;
+}
+
+body.dark-mode .option-group input[type="range"] {
+    background: #1a1a1a;
+}
+
+body.dark-mode .aspect-btn,
+body.dark-mode .btn-sm {
+    background: #1a1a1a;
+    border-color: #404040;
+}
+
+body.dark-mode .crop-result-section {
+    background: #2a2a2a;
+}

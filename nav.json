@@ -46,5 +46,11 @@
     "name": "图片压缩",
     "icon": "fas fa-compress-alt",
     "url": "image-compress.html"
+  },
+  {
+    "id": "crop",
+    "name": "图片裁剪",
+    "icon": "fas fa-crop",
+    "url": "crop.html"
   }
 ]

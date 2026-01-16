@@ -515,7 +515,7 @@ body.dark-mode .topbar {
 
 /* 工具内容区 */
 .tool-content {
-    display: none;
+    display: block;
     background: white;
     border-radius: var(--border-radius);
     padding: 30px;
@@ -526,10 +526,6 @@ body.dark-mode .topbar {
 
 body.dark-mode .tool-content {
     background: #1e293b;
-}
-
-.tool-content.active {
-    display: block;
 }
 
 @keyframes fadeIn {
