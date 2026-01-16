@@ -1,233 +1,308 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>图片裁剪 - 太皮工具箱</title>
-    <link rel="icon" href="/favicon.png" type="image/png">
-    <meta name="keywords" content="图片裁剪, 裁剪工具, 图片编辑, 在线裁剪">
-    <meta name="description" content="图片裁剪工具，支持自由裁剪、固定比例裁剪、旋转等功能，轻松编辑和处理图片。">
-    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="/favicon.png" type="image/png" />
+    <meta name="keywords" content="图片裁剪, 裁剪工具, 图片编辑, 在线裁剪" />
+    <meta
+      name="description"
+      content="图片裁剪工具，支持自由裁剪、固定比例裁剪、旋转等功能，轻松编辑和处理图片。"
+    />
+    <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="css/crop.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
     <div class="app-container">
-        <!-- 侧边栏导航 -->
-        <nav class="sidebar">
-            <div class="logo">
-                <img src="./images/tools_logo.png" alt="太皮工具箱 Logo" class="logo-image">
-                <h1>太皮工具箱</h1>
-            </div>
-            <ul class="nav-menu" id="navMenu"></ul>
-        </nav>
+      <!-- 侧边栏导航 -->
+      <nav class="sidebar">
+        <div class="logo">
+          <img
+            src="./images/tools_logo.png"
+            alt="太皮工具箱 Logo"
+            class="logo-image"
+          />
+          <h1>太皮工具箱</h1>
+        </div>
+        <ul class="nav-menu" id="navMenu"></ul>
+      </nav>
 
-        <!-- 主内容区 -->
-        <main class="main-content">
-            <!-- 顶部栏 -->
-            <div class="topbar">
-                <h2>图片裁剪</h2>
-                <div class="topbar-controls">
-                    <button class="theme-toggle" id="themeToggle">
-                        <i class="fas fa-moon"></i>
+      <!-- 主内容区 -->
+      <main class="main-content">
+        <!-- 顶部栏 -->
+        <div class="topbar">
+          <h2>图片裁剪</h2>
+          <div class="topbar-controls">
+            <button class="theme-toggle" id="themeToggle">
+              <i class="fas fa-moon"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- 图片裁剪工具 -->
+        <div class="tool-content">
+          <div class="tool-header">
+            <div class="tool-icon">
+              <i class="fas fa-crop"></i>
+            </div>
+            <div>
+              <h2 class="tool-title">图片裁剪工具</h2>
+              <p class="tool-description">
+                灵活裁剪图片，支持自由裁剪、固定比例、旋转等功能
+              </p>
+            </div>
+          </div>
+
+          <!-- 上传区域和裁剪工具 -->
+          <div class="crop-main-container">
+            <!-- 左侧：图片上传和裁剪预览 -->
+            <div class="crop-preview-section">
+              <div class="input-group">
+                <label for="cropImageUpload"
+                  ><i class="fas fa-upload"></i> 选择图片文件</label
+                >
+                <div class="file-upload">
+                  <input type="file" id="cropImageUpload" accept="image/*" />
+                  <div class="upload-area" id="cropUploadArea">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>点击或拖拽上传图片</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 裁剪容器 -->
+              <div
+                class="crop-container"
+                id="cropContainer"
+                style="display: none"
+              >
+                <div class="crop-image-wrapper">
+                  <img id="cropImage" alt="待裁剪图片" />
+                  <div class="crop-overlay"></div>
+                  <div class="crop-box" id="cropBox">
+                    <div class="crop-handle crop-handle-nw"></div>
+                    <div class="crop-handle crop-handle-ne"></div>
+                    <div class="crop-handle crop-handle-sw"></div>
+                    <div class="crop-handle crop-handle-se"></div>
+                    <div class="crop-handle crop-handle-n"></div>
+                    <div class="crop-handle crop-handle-s"></div>
+                    <div class="crop-handle crop-handle-w"></div>
+                    <div class="crop-handle crop-handle-e"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 右侧：裁剪选项 -->
+            <div class="crop-options-section">
+              <div class="crop-options-content">
+                <!-- 裁剪比例 -->
+                <div class="option-group">
+                  <label>裁剪比例</label>
+                  <div class="aspect-ratio-buttons">
+                    <button class="aspect-btn" data-ratio="0">自由</button>
+                    <button class="aspect-btn" data-ratio="1/1">1:1</button>
+                    <button class="aspect-btn" data-ratio="4/3">4:3</button>
+                    <button class="aspect-btn" data-ratio="3/2">3:2</button>
+                    <button class="aspect-btn" data-ratio="16/9">16:9</button>
+                    <button class="aspect-btn" data-ratio="9/16">9:16</button>
+                  </div>
+                </div>
+
+                <!-- 旋转角度 -->
+                <div class="option-group">
+                  <label for="rotateSlider">
+                    旋转角度
+                    <span class="value-label" id="rotateValue">0°</span>
+                  </label>
+                  <div class="slider-container">
+                    <input
+                      type="range"
+                      id="rotateSlider"
+                      min="-180"
+                      max="180"
+                      value="0"
+                      step="1"
+                    />
+                    <div class="slider-value-display" id="rotateTooltip">
+                      0°
+                    </div>
+                  </div>
+                  <div class="slider-ticks">
+                    <span>-180°</span>
+                    <span class="active">0°</span>
+                    <span>180°</span>
+                  </div>
+                  <div class="rotate-buttons">
+                    <button id="rotateLeftBtn" class="btn-sm">
+                      <i class="fas fa-redo"></i> 左转90°
                     </button>
+                    <button id="rotateRightBtn" class="btn-sm">
+                      <i class="fas fa-undo"></i> 右转90°
+                    </button>
+                    <button id="resetRotateBtn" class="btn-sm">
+                      <i class="fas fa-sync"></i> 重置
+                    </button>
+                  </div>
                 </div>
+
+                <!-- 缩放 -->
+                <div class="option-group">
+                  <label for="scaleSlider">
+                    缩放
+                    <span class="value-label" id="scaleValue">100%</span>
+                  </label>
+                  <div class="slider-container">
+                    <input
+                      type="range"
+                      id="scaleSlider"
+                      min="50"
+                      max="200"
+                      value="100"
+                      step="5"
+                    />
+                    <div class="slider-value-display" id="scaleTooltip">
+                      100%
+                    </div>
+                  </div>
+                  <div class="slider-ticks">
+                    <span>50%</span>
+                    <span class="active">100%</span>
+                    <span>200%</span>
+                  </div>
+                </div>
+
+                <!-- 翻转 -->
+                <div class="option-group">
+                  <label>翻转</label>
+                  <div class="flip-buttons">
+                    <button id="flipHorizontalBtn" class="btn-sm">
+                      <i class="fas fa-arrows-alt-h"></i> 水平翻转
+                    </button>
+                    <button id="flipVerticalBtn" class="btn-sm">
+                      <i class="fas fa-arrows-alt-v"></i> 竖直翻转
+                    </button>
+                  </div>
+                </div>
+
+                <!-- 输出格式 -->
+                <div class="option-group">
+                  <label for="outputFormat">输出格式</label>
+                  <select id="outputFormat">
+                    <option value="image/jpeg">JPEG</option>
+                    <option value="image/png">PNG</option>
+                    <option value="image/webp">WebP</option>
+                  </select>
+                </div>
+
+                <!-- 输出质量 -->
+                <div class="option-group">
+                  <label for="outputQuality">
+                    输出质量
+                    <span class="value-label" id="qualityValue">85%</span>
+                  </label>
+                  <div class="slider-container">
+                    <input
+                      type="range"
+                      id="outputQuality"
+                      min="10"
+                      max="100"
+                      value="85"
+                      step="5"
+                    />
+                    <div class="slider-value-display" id="qualityTooltip">
+                      85%
+                    </div>
+                  </div>
+                  <div class="slider-ticks">
+                    <span>10%</span>
+                    <span class="active">85%</span>
+                    <span>100%</span>
+                  </div>
+                </div>
+
+                <!-- 裁剪信息 -->
+                <div class="crop-info" id="cropInfo" style="display: none">
+                  <p>选中区域: <span id="cropDimensions">0 x 0</span></p>
+                  <p>原始尺寸: <span id="imageDimensions">0 x 0</span></p>
+                </div>
+              </div>
+
+              <!-- 操作按钮区域 -->
+              <div class="crop-options-actions">
+                <div class="action-buttons">
+                  <button id="resetCropBtn" class="btn btn-primary" disabled>
+                    <i class="fas fa-redo"></i> 重置
+                  </button>
+                  <button id="cropApplyBtn" class="btn btn-success" disabled>
+                    <i class="fas fa-check"></i> 应用裁剪
+                  </button>
+                  <button id="clearCropBtn" class="btn btn-danger" disabled>
+                    <i class="fas fa-trash"></i> 清空
+                  </button>
+                </div>
+              </div>
             </div>
+          </div>
 
-            <!-- 图片裁剪工具 -->
-            <div class="tool-content">
-                <div class="tool-header">
-                    <div class="tool-icon">
-                        <i class="fas fa-crop"></i>
-                    </div>
-                    <div>
-                        <h2 class="tool-title">图片裁剪工具</h2>
-                        <p class="tool-description">灵活裁剪图片，支持自由裁剪、固定比例、旋转等功能</p>
-                    </div>
-                </div>
-
-                <!-- 上传区域和裁剪工具 -->
-                <div class="crop-main-container">
-                    <!-- 左侧：图片上传和裁剪预览 -->
-                    <div class="crop-preview-section">
-                        <div class="input-group">
-                            <label for="cropImageUpload"><i class="fas fa-upload"></i> 选择图片文件</label>
-                            <div class="file-upload">
-                                <input type="file" id="cropImageUpload" accept="image/*">
-                                <div class="upload-area" id="cropUploadArea">
-                                    <i class="fas fa-cloud-upload-alt"></i>
-                                    <p>点击或拖拽上传图片</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 裁剪容器 -->
-                        <div class="crop-container" id="cropContainer" style="display: none;">
-                            <div class="crop-image-wrapper">
-                                <img id="cropImage" alt="待裁剪图片" />
-                                <div class="crop-overlay"></div>
-                                <div class="crop-box" id="cropBox">
-                                    <div class="crop-handle crop-handle-nw"></div>
-                                    <div class="crop-handle crop-handle-ne"></div>
-                                    <div class="crop-handle crop-handle-sw"></div>
-                                    <div class="crop-handle crop-handle-se"></div>
-                                    <div class="crop-handle crop-handle-n"></div>
-                                    <div class="crop-handle crop-handle-s"></div>
-                                    <div class="crop-handle crop-handle-w"></div>
-                                    <div class="crop-handle crop-handle-e"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 右侧：裁剪选项 -->
-                    <div class="crop-options-section">
-                        <div class="crop-options-content">
-                            <!-- 裁剪比例 -->
-                            <div class="option-group">
-                                <label>裁剪比例</label>
-                                <div class="aspect-ratio-buttons">
-                                    <button class="aspect-btn" data-ratio="0">自由</button>
-                                    <button class="aspect-btn" data-ratio="1/1">1:1</button>
-                                    <button class="aspect-btn" data-ratio="4/3">4:3</button>
-                                    <button class="aspect-btn" data-ratio="3/2">3:2</button>
-                                    <button class="aspect-btn" data-ratio="16/9">16:9</button>
-                                    <button class="aspect-btn" data-ratio="9/16">9:16</button>
-                                </div>
-                            </div>
-
-                            <!-- 旋转角度 -->
-                            <div class="option-group">
-                                <label for="rotateSlider">
-                                    旋转角度
-                                    <span class="value-label" id="rotateValue">0°</span>
-                                </label>
-                                <div class="slider-container">
-                                    <input type="range" id="rotateSlider" min="-180" max="180" value="0" step="1">
-                                    <div class="slider-value-display" id="rotateTooltip">0°</div>
-                                </div>
-                                <div class="slider-ticks">
-                                    <span>-180°</span>
-                                    <span class="active">0°</span>
-                                    <span>180°</span>
-                                </div>
-                                <div class="rotate-buttons">
-                                    <button id="rotateLeftBtn" class="btn-sm">
-                                        <i class="fas fa-redo"></i> 左转90°
-                                    </button>
-                                    <button id="rotateRightBtn" class="btn-sm">
-                                        <i class="fas fa-undo"></i> 右转90°
-                                    </button>
-                                    <button id="resetRotateBtn" class="btn-sm">
-                                        <i class="fas fa-sync"></i> 重置
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- 缩放 -->
-                            <div class="option-group">
-                                <label for="scaleSlider">
-                                    缩放
-                                    <span class="value-label" id="scaleValue">100%</span>
-                                </label>
-                                <div class="slider-container">
-                                    <input type="range" id="scaleSlider" min="50" max="200" value="100" step="5">
-                                    <div class="slider-value-display" id="scaleTooltip">100%</div>
-                                </div>
-                                <div class="slider-ticks">
-                                    <span>50%</span>
-                                    <span class="active">100%</span>
-                                    <span>200%</span>
-                                </div>
-                            </div>
-
-                            <!-- 翻转 -->
-                            <div class="option-group">
-                                <label>翻转</label>
-                                <div class="flip-buttons">
-                                    <button id="flipHorizontalBtn" class="btn-sm">
-                                        <i class="fas fa-arrows-alt-h"></i> 水平翻转
-                                    </button>
-                                    <button id="flipVerticalBtn" class="btn-sm">
-                                        <i class="fas fa-arrows-alt-v"></i> 竖直翻转
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- 输出格式 -->
-                            <div class="option-group">
-                                <label for="outputFormat">输出格式</label>
-                                <select id="outputFormat">
-                                    <option value="image/jpeg">JPEG</option>
-                                    <option value="image/png">PNG</option>
-                                    <option value="image/webp">WebP</option>
-                                </select>
-                            </div>
-
-                            <!-- 输出质量 -->
-                            <div class="option-group">
-                                <label for="outputQuality">
-                                    输出质量
-                                    <span class="value-label" id="qualityValue">85%</span>
-                                </label>
-                                <div class="slider-container">
-                                    <input type="range" id="outputQuality" min="10" max="100" value="85" step="5">
-                                    <div class="slider-value-display" id="qualityTooltip">85%</div>
-                                </div>
-                                <div class="slider-ticks">
-                                    <span>10%</span>
-                                    <span class="active">85%</span>
-                                    <span>100%</span>
-                                </div>
-                            </div>
-
-                            <!-- 裁剪信息 -->
-                            <div class="crop-info" id="cropInfo" style="display: none;">
-                                <p>选中区域: <span id="cropDimensions">0 x 0</span></p>
-                                <p>原始尺寸: <span id="imageDimensions">0 x 0</span></p>
-                            </div>
-                        </div>
-
-                        <!-- 操作按钮区域 -->
-                        <div class="crop-options-actions">
-                            <div class="action-buttons">
-                                <button id="resetCropBtn" class="btn btn-primary" disabled>
-                                    <i class="fas fa-redo"></i> 重置
-                                </button>
-                                <button id="cropApplyBtn" class="btn btn-success" disabled>
-                                    <i class="fas fa-check"></i> 应用裁剪
-                                </button>
-                                <button id="clearCropBtn" class="btn btn-danger" disabled>
-                                    <i class="fas fa-trash"></i> 清空
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 预览和下载区域 -->
-                <div class="crop-result-section" id="cropResultSection" style="display: none;">
-                    <div class="result-header">
-                        <h3>裁剪结果</h3>
-                        <p id="resultFileSize"></p>
-                    </div>
-                    <div class="result-preview">
-                        <canvas id="resultCanvas" style="max-width: 100%; border: 1px solid #ddd; border-radius: 4px; display: block; margin: 0 auto;"></canvas>
-                    </div>
-                    <div class="result-actions">
-                        <button id="downloadCropBtn" class="btn btn-success">
-                            <i class="fas fa-download"></i> 下载裁剪图片
-                        </button>
-                        <button id="editAgainBtn" class="btn btn-primary">
-                            <i class="fas fa-edit"></i> 继续编辑
-                        </button>
-                    </div>
-                </div>
+          <!-- 预览和下载区域 -->
+          <div
+            class="crop-result-section"
+            id="cropResultSection"
+            style="display: none"
+          >
+            <div class="result-header">
+              <h3>裁剪结果</h3>
+              <p id="resultFileSize"></p>
             </div>
-        </main>
+            <div class="result-preview">
+              <canvas
+                id="resultCanvas"
+                style="
+                  max-width: 100%;
+                  border: 1px solid #ddd;
+                  border-radius: 4px;
+                  display: block;
+                  margin: 0 auto;
+                "
+              ></canvas>
+            </div>
+            <div class="result-actions">
+              <button id="downloadCropBtn" class="btn btn-success">
+                <i class="fas fa-download"></i> 下载裁剪图片
+              </button>
+              <button id="editAgainBtn" class="btn btn-primary">
+                <i class="fas fa-edit"></i> 继续编辑
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- 主内容区页脚 -->
+        <footer class="main-footer">
+          <div class="footer-content">
+            <div class="footer-copyright">
+              <p>© 2025 太皮工具箱 | 开发者必备工具集</p>
+              <p>本工具完全在浏览器端运行，不会上传任何数据到服务器</p>
+            </div>
+            <div class="runtime-display">
+              <p>
+                小破站已运行 <span class="runtime-days">0</span> 天
+                <span class="runtime-hours">0</span> 时
+                <span class="runtime-minutes">0</span> 分
+                <span class="runtime-seconds">0</span> 秒
+              </p>
+            </div>
+          </div>
+        </footer>
+      </main>
     </div>
 
     <script src="main.js"></script>
     <script src="tools/crop.js"></script>
-</body>
+  </body>
 </html>
