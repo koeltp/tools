@@ -41,3 +41,29 @@
 4. 根据需要输入数据并点击相应按钮处理
 
 ## 文件结构
+```
+- `index.html` - 主HTML文件，包含所有工具的界面
+- `styles.css` - 样式文件，定义页面布局和样式
+- `scripts/` - 包含各个工具的JavaScript实现
+  - `timestamp.js` - 时间戳转换工具
+  - `jsonTool.js` - JSON工具
+  - `md5.js` - MD5加密工具
+  - `aes.js` - AES加密/解密工具
+  - `encoding.js` - 编码/解码工具
+  - `passwordGenerator.js` - 密码生成器
+```
+## 贡献
+欢迎任何形式的贡献！如果您有新的功能建议或发现了问题，请提交Pull Request或在Issues中报告.
+## 许可证
+本项目采用MIT许可证，详情请参阅LICENSE文件。
+## 作者
+- 开发者: koeltp
+- 联系方式:
+   - 邮箱:tp@taipi.top
+   - GitHub: [koeltp](https://github.com/koeltp)
+   - 个人网站: [taipi.top](https://nav.taipi.top)
+   - 个人博客: [字节时代](https://www.byteepoch.com)
+   - 工具网站： [全能工具箱](https://tools.taipi.top)
+## 致谢
+感谢所有为本项目做出贡献的开发者和用户！
+感谢您的使用和支持！祝您使用愉快！
