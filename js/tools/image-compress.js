@@ -1,7 +1,5 @@
 // 图片压缩工具
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('图片压缩工具开始加载...');
-    
     // 工具元素
     const imageUpload = document.getElementById('imageUpload');
     const uploadArea = document.getElementById('uploadArea');
@@ -158,8 +156,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 加载图片
     function loadImage(file) {
-        console.log('加载图片:', file.name, file.type, file.size);
-        
         if (!file.type.match('image.*')) {
             showNotification('请选择有效的图片文件', 'error');
             console.error('无效的文件类型:', file.type);
@@ -554,7 +550,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function showNotification(message, type = 'success') {
-        console.log('显示通知:', message, type);
         const notification = document.createElement('div');
         notification.className = `copy-notification ${type}`;
         notification.textContent = message;
@@ -585,7 +580,4 @@ document.addEventListener('DOMContentLoaded', function() {
     if (clearBtn) {
         clearBtn.addEventListener('click', resetUI);
     }
-    
-    // 初始化
-    console.log('图片压缩工具加载完成');
 });

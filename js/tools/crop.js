@@ -1,7 +1,5 @@
 // 图片裁剪工具
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('图片裁剪工具开始加载...');
-    
     // 工具元素
     const cropImageUpload = document.getElementById('cropImageUpload');
     const cropUploadArea = document.getElementById('cropUploadArea');
@@ -131,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function() {
         slider.addEventListener('touchstart', function() {
             isDragging = true;
             lastValidValue = parseInt(this.value);
-        });
+        },{ passive: false });
         
         slider.addEventListener('input', function() {
             if (!isDragging) return;
