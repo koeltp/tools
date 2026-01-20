@@ -101,6 +101,4 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 如果AES工具是默认激活的，直接初始化
         initExampleData();
-    
-    console.log('AES工具已加载');
 });

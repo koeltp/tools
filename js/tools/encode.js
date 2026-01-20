@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 初始化示例数据
     function initExampleData() {
-        encodeInput.value = 'https://example.com/search?q=编码解码工具';
+        encodeInput.value = 'https://www.jieleme.top';
         document.getElementById('processEncode').click();
     }
 

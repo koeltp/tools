@@ -1,115 +1,121 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AES加密/解密 - 太皮工具箱</title>
-    <link rel="icon" href="/favicon.png" type="image/png">
-    <meta name="keywords" content="AES加密, AES解密, 数据加密, 对称加密">
-    <meta name="description" content="AES加密/解密工具，使用AES算法加密和解密文本数据，支持16/24/32字节密钥。">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
+    <link rel="icon" href="images/logo.png" type="image/png" />
+    <meta name="keywords" content="AES加密, AES解密, 数据加密, 对称加密" />
+    <meta
+      name="description"
+      content="AES加密/解密工具，使用AES算法加密和解密文本数据，支持16/24/32字节密钥。"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
 
-<body>
+  <body>
     <div class="app-container">
-        <!-- 侧边栏导航 -->
-        <nav class="sidebar">
-            <div class="logo">
-                <img src="./images/tools_logo.png" alt="太皮工具箱 Logo" class="logo-image">
-                <h1>太皮工具箱</h1>
+      <!-- 侧边栏导航 -->
+      <nav class="sidebar">
+        <div class="logo">
+          <img src="./images/logo.png" alt="太皮工具箱 Logo" class="logo-image"/>
+          <h1>太皮工具箱</h1>
+        </div>
+        <ul class="nav-menu" id="navMenu"></ul>
+      </nav>
+
+      <!-- 主内容区 -->
+      <main class="main-content">
+        <!-- 顶部栏 -->
+        <div class="topbar">
+          <h2>AES加密/解密</h2>
+          <div class="topbar-controls">
+            <button class="theme-toggle" id="themeToggle">
+              <i class="fas fa-moon"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- AES加密解密工具 -->
+        <div class="tool-content">
+          <div class="tool-header">
+            <div class="tool-icon">
+              <i class="fas fa-lock"></i>
             </div>
-            <ul class="nav-menu" id="navMenu"></ul>
-        </nav>
-
-        <!-- 主内容区 -->
-        <main class="main-content">
-            <!-- 顶部栏 -->
-            <div class="topbar">
-                <h2>AES加密/解密</h2>
-                <div class="topbar-controls">
-                    <button class="theme-toggle" id="themeToggle">
-                        <i class="fas fa-moon"></i>
-                    </button>
-                </div>
+            <div>
+              <h2 class="tool-title">AES加密/解密工具</h2>
+              <p class="tool-description">使用AES算法加密和解密文本数据</p>
             </div>
+          </div>
 
-            <!-- AES加密解密工具 -->
-            <div class="tool-content">
-                <div class="tool-header">
-                    <div class="tool-icon">
-                        <i class="fas fa-lock"></i>
-                    </div>
-                    <div>
-                        <h2 class="tool-title">AES加密/解密工具</h2>
-                        <p class="tool-description">使用AES算法加密和解密文本数据</p>
-                    </div>
-                </div>
+          <div class="input-group">
+            <label for="aesInput"
+              ><i class="fas fa-keyboard"></i> 输入要加密/解密的文本</label
+            >
+            <textarea
+              id="aesInput"
+              placeholder="输入要加密或解密的文本"
+            ></textarea>
+          </div>
 
-                <div class="input-group">
-                    <label for="aesInput"><i class="fas fa-keyboard"></i> 输入要加密/解密的文本</label>
-                    <textarea id="aesInput" placeholder="输入要加密或解密的文本"></textarea>
-                </div>
+          <div class="input-group">
+            <label for="aesKey"
+              ><i class="fas fa-key"></i> 密钥 (16/24/32字节)</label
+            >
+            <input
+              type="text"
+              id="aesKey"
+              placeholder="输入AES密钥，长度16/24/32字符"
+              value="mySecretKey12345"
+            />
+          </div>
 
-                <div class="input-group">
-                    <label for="aesKey"><i class="fas fa-key"></i> 密钥 (16/24/32字节)</label>
-                    <input type="text" id="aesKey" placeholder="输入AES密钥，长度16/24/32字符" value="mySecretKey12345">
-                </div>
-
-                <div class="crypto-options">
-                    <div class="crypto-option active" data-mode="encrypt">
-                        <div class="crypto-option-title">
-                            <i class="fas fa-lock"></i> 加密模式
-                        </div>
-                        <div class="crypto-option-desc">将明文转换为密文</div>
-                    </div>
-                    <div class="crypto-option" data-mode="decrypt">
-                        <div class="crypto-option-title">
-                            <i class="fas fa-unlock"></i> 解密模式
-                        </div>
-                        <div class="crypto-option-desc">将密文转换为明文</div>
-                    </div>
-                </div>
-
-                <div class="button-group">
-                    <button id="processAES" class="btn btn-success">
-                        <i class="fas fa-cogs"></i> 执行加密/解密
-                    </button>
-                    <button id="clearAES" class="btn btn-warning">
-                        <i class="fas fa-broom"></i> 清空
-                    </button>
-                </div>
-
-                <div class="result-container">
-                    <div class="result-title"><i class="fas fa-lock"></i> 加密/解密结果</div>
-                    <div class="result-content copyable" id="aesResult">等待处理...</div>
-                </div>
+          <div class="crypto-options">
+            <div class="crypto-option active" data-mode="encrypt">
+              <div class="crypto-option-title">
+                <i class="fas fa-lock"></i> 加密模式
+              </div>
+              <div class="crypto-option-desc">将明文转换为密文</div>
             </div>
+            <div class="crypto-option" data-mode="decrypt">
+              <div class="crypto-option-title">
+                <i class="fas fa-unlock"></i> 解密模式
+              </div>
+              <div class="crypto-option-desc">将密文转换为明文</div>
+            </div>
+          </div>
 
-            <!-- 主内容区页脚 -->
-            <footer class="main-footer">
-                <div class="footer-content">
-                    <div class="footer-copyright">
-                        <p>© 2025 太皮工具箱 | 开发者必备工具集</p>
-                        <p>本工具完全在浏览器端运行，不会上传任何数据到服务器</p>
-                    </div>
-                    <div class="runtime-display">
-                        <p>小破站已运行
-                            <span class="runtime-days">0</span> 天
-                            <span class="runtime-hours">0</span> 时
-                            <span class="runtime-minutes">0</span> 分
-                            <span class="runtime-seconds">0</span> 秒
-                        </p>
-                    </div>
-                </div>
-            </footer>
-        </main>
+          <div class="button-group">
+            <button id="processAES" class="btn btn-success">
+              <i class="fas fa-cogs"></i> 执行加密/解密
+            </button>
+            <button id="clearAES" class="btn btn-warning">
+              <i class="fas fa-broom"></i> 清空
+            </button>
+          </div>
+
+          <div class="result-container">
+            <div class="result-title">
+              <i class="fas fa-lock"></i> 加密/解密结果
+            </div>
+            <div class="result-content copyable" id="aesResult">
+              等待处理...
+            </div>
+          </div>
+        </div>
+
+        <!-- 页脚将通过JS动态生成 -->
+        <div id="main-footer-container"></div>
+      </main>
     </div>
 
     <!-- JavaScript文件 -->
-    <script src="main.js" type="module"></script>
-    <script src="tools/aes.js" type="module"></script>
-</body>
-
+    <script src="js/main.js" type="module"></script>
+    <script src="js/tools/aes.js" type="module"></script>
+    <script src="js/footer.js"></script>
+  </body>
 </html>

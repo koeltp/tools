@@ -131,6 +131,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 "city": "北京",
                 "street": "朝阳路"
             },
+            "website": [
+                {"url":"https://tz.taipi.top","name":"TP投资"},
+                {"url":"https://www.jieleme.top","name":"结了么"},
+                {"url":"https://www.byteepoch.com","name":"字节时代"},
+                {"url":"https://jiewei.top","name":"杰威精密"},
+                {"url":"https://nav.taipi.top","name":"太皮导航"},
+                {"url":"https://www.dogedoge.com","name":"太皮工具箱"}
+            ],
             "scores": [85, 92, 78, 95]
         };
         jsonInput.value = JSON.stringify(exampleJson, null, 2);

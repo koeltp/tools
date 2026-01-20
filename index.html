@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>时间戳转换 - 太皮工具箱</title>
-    <link rel="icon" href="/favicon.png" type="image/png">
+    <link rel="icon" href="images/logo.png" type="image/png" />
     <meta name="keywords" content="时间戳转换, 时间戳转日期, 日期转时间戳, 时间工具">
     <meta name="description" content="时间戳转换工具，支持时间戳与日期格式相互转换，提供多种时间格式展示。">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
@@ -17,7 +17,7 @@
         <!-- 侧边栏导航 -->
         <nav class="sidebar">
             <div class="logo">
-                <img src="./images/tools_logo.png" alt="太皮工具箱 Logo" class="logo-image">
+                <img src="./images/logo.png" alt="太皮工具箱 Logo" class="logo-image"/>
                 <h1>太皮工具箱</h1>
             </div>
 
@@ -86,28 +86,14 @@
             </div>
 
             <!-- 主内容区页脚 -->
-            <footer class="main-footer">
-                <div class="footer-content">
-                    <div class="footer-copyright">
-                        <p>© 2025 太皮工具箱 | 开发者必备工具集</p>
-                        <p>本工具完全在浏览器端运行，不会上传任何数据到服务器</p>
-                    </div>
-                    <div class="runtime-display">
-                        <p>小破站已运行
-                            <span class="runtime-days">0</span> 天
-                            <span class="runtime-hours">0</span> 时
-                            <span class="runtime-minutes">0</span> 分
-                            <span class="runtime-seconds">0</span> 秒
-                        </p>
-                    </div>
-                </div>
-            </footer>
+            <div id="main-footer-container"></div>
         </main>
     </div>
 
     <!-- JavaScript文件 -->
-    <script src="main.js" type="module"></script>
-    <script src="tools/timestamp.js" type="module"></script>
+    <script src="js/main.js" type="module"></script>
+    <script src="js/tools/timestamp.js" type="module"></script>
+    <script src="js/footer.js"></script>
 </body>
 
 </html>

@@ -148,6 +148,4 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 如果时间戳工具是默认激活的，直接初始化
         initExampleData();
-
-    console.log('时间戳工具已加载');
 });
